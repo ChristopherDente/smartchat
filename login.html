@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SmartChat</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .split-screen { min-height: 100vh; }
+        .brand-side { background-color: var(--bg-light); position: relative; overflow: hidden; border-right: 1px solid rgba(255,255,255,0.05); }
+        .form-side { background-color: var(--bg-dark); }
+        .brand-icon-svg { width: 48px; height: 48px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .brand-icon-svg-small { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .auth-form-wrapper { width: 100%; max-width: 420px; }
+        .auth-logo { color: white; font-weight: 800; font-size: 2rem; display: inline-flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .auth-logo .brand-icon { color: var(--primary-color); }
+        .auth-logo-small { color: white; font-weight: 800; font-size: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .auth-logo-small .brand-icon { color: var(--primary-color); }
+    </style>
+</head>
+<body class="bg-dark text-white">
+
+    <div class="container-fluid p-0">
+        <div class="row g-0 split-screen">
+            <!-- Brand Side (Left, Hidden on mobile) -->
+            <div class="col-lg-5 col-xl-4 d-none d-lg-flex brand-side align-items-center justify-content-center p-5">
+                <div class="animation-circle"></div>
+                <div class="animation-pulse" style="top:auto; bottom: -30px; right: -30px; left:auto;"></div>
+                
+                <div class="position-relative z-1 text-center">
+                    <a href="index.html" class="auth-logo mb-4">
+                        <span class="brand-icon">
+                            <svg class="brand-icon-svg" viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                <path d="M13 3l-3 9h4l-3 9"></path>
+                            </svg>
+                        </span>
+                        SmartChat
+                    </a>
+                    <h2 class="h3 fw-bold mb-3 text-white">Welcome back</h2>
+                    <p class="text-muted fs-5">Log in to seamlessly connect with your team and let AI do the heavy lifting.</p>
+                </div>
+            </div>
+
+            <!-- Form Side (Right) -->
+            <div class="col-lg-7 col-xl-8 d-flex flex-column form-side">
+                <div class="p-4 d-lg-none border-bottom border-secondary border-opacity-25">
+                    <a href="index.html" class="auth-logo-small">
+                        <span class="brand-icon">
+                            <svg class="brand-icon-svg-small" viewBox="0 0 24 24">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                <path d="M13 3l-3 9h4l-3 9"></path>
+                            </svg>
+                        </span>
+                        SmartChat
+                    </a>
+                </div>
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center p-5">
+                    <div class="auth-form-wrapper">
+                        <div class="mb-4">
+                            <a href="index.html" class="text-decoration-none text-muted d-inline-flex align-items-center"><i class="bi bi-arrow-left me-2"></i> Back to Home</a>
+                        </div>
+                        <div class="text-center mb-5">
+                            <h3 class="fw-bold">Sign In</h3>
+                            <p class="text-muted">Enter your credentials to access your account.</p>
+                        </div>
+
+                        <form action="chatting.html">
+                            <div class="mb-4">
+                                <label for="email" class="form-label text-muted fw-semibold">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="name@company.com" required>
+                            </div>
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between">
+                                    <label for="password" class="form-label text-muted fw-semibold">Password</label>
+                                    <a href="#" class="text-primary text-decoration-none small fw-medium">Forgot password?</a>
+                                </div>
+                                <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100 py-3 mb-4 rounded-3 shadow-none">Sign In</button>
+                        </form>
+                        
+                        <div class="position-relative my-4">
+                            <hr class="border-secondary border-opacity-50">
+                            <span class="position-absolute top-50 start-50 translate-middle px-3 text-muted small" style="background-color: var(--bg-dark);">Or continue with</span>
+                        </div>
+
+                        <div class="d-flex gap-3 mb-4">
+                            <a href="#" class="btn btn-outline-custom flex-grow-1 d-flex justify-content-center align-items-center rounded-3 px-0 py-2">
+                                <i class="bi bi-google me-2"></i> Google
+                            </a>
+                            <a href="#" class="btn btn-outline-custom flex-grow-1 d-flex justify-content-center align-items-center rounded-3 px-0 py-2">
+                                <i class="bi bi-github me-2"></i> GitHub
+                            </a>
+                        </div>
+
+                        <div class="text-center pt-3">
+                            <span class="text-muted">Don't have an account?</span> 
+                            <a href="register.html" class="text-primary text-decoration-none fw-bold ms-1">Create an account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

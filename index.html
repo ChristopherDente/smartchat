@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SmartChat - Smarter Conversations, Faster Connections">
+    <title>SmartChat | Intelligent Messaging Platform</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Logo SVG Base Styles (Optional direct overrides if needed) */
+        .brand-icon-svg {
+            width: 32px;
+            height: 32px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true"
+    tabindex="0">
+
+    <!-- Navbar Section -->
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#hero">
+                <span class="brand-icon">
+                    <svg class="brand-icon-svg" viewBox="0 0 24 24">
+                        <!-- Chat Bubble Path -->
+                        <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                        </path>
+                        <!-- Lightning/AI icon inside bubble -->
+                        <path d="M13 3l-3 9h4l-3 9"></path>
+                    </svg>
+                </span>
+                SmartChat
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#hero">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#mission-vision">Mission & Vision</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div
+                    class="d-flex align-items-center ms-lg-3 border-start border-secondary border-opacity-25 ps-3 py-1">
+                    <a href="login.html"
+                        class="text-white text-decoration-none fw-medium me-3 hover-primary transition">Log in</a>
+                    <a href="register.html" class="btn btn-primary-custom px-4 py-2">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Hero Content -->
+                <div class="col-lg-6 hero-content animate-on-scroll">
+                    <h1 class="hero-title">
+                        Smarter Conversations,<br>
+                        <span>Faster Connections</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Experience the next generation of messaging. SmartChat combines real-time communication with
+                        powerful AI to help you connect, collaborate, and grow faster than ever before.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="login.html" class="btn btn-primary-custom">Start Chatting</a>
+                        <a href="#about" class="btn btn-outline-custom">Learn More</a>
+                    </div>
+                </div>
+                <!-- Hero Visual / Mockup -->
+                <div class="col-lg-6 mt-5 mt-lg-0 hero-mockup-container animate-on-scroll">
+                    <div class="hero-mockup">
+                        <div class="mockup-header">
+                            <div class="mockup-avatar">
+                                <i class="bi bi-robot"></i>
+                            </div>
+                            <div class="mockup-info">
+                                <h6>SmartChat AI</h6>
+                                <span><i class="bi bi-circle-fill me-1" style="font-size: 8px;"></i>Online</span>
+                            </div>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="chat-bubble chat-left">
+                                Hello! How can I help you streamline your workflow today?
+                            </div>
+                            <div class="chat-bubble chat-right">
+                                Can you summarize the Q3 marketing report and share it with the team?
+                            </div>
+                            <div class="chat-bubble chat-left">
+                                Absolutely. I've generated a summary and automatically posted it to the '#Marketing'
+                                channel. Everyone is now up to speed! ⚡
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Core Features</h2>
+            <div class="row g-4">
+                <!-- Feature 1 -->
+                <div class="col-md-6 col-lg-3 animate-on-scroll" style="transition-delay: 0.1s">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <h4>Real-time Messaging</h4>
+                        <p class="text-muted">Experience instantaneous communication with zero lag. Your connections
+                            happen in true real-time.</p>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div class="col-md-6 col-lg-3 animate-on-scroll" style="transition-delay: 0.2s">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <h4>AI-Assisted Replies</h4>
+                        <p class="text-muted">Save time with smart contextual suggestions and automated summaries that
+                            adapt to your conversation.</p>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="col-md-6 col-lg-3 animate-on-scroll" style="transition-delay: 0.3s">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <h4>Secure Communcation</h4>
+                        <p class="text-muted">Enterprise-grade end-to-end encryption ensures your conversations and data
+                            remain private.</p>
+                    </div>
+                </div>
+                <!-- Feature 4 -->
+                <div class="col-md-6 col-lg-3 animate-on-scroll" style="transition-delay: 0.4s">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-display"></i>
+                        </div>
+                        <h4>Cross-Platform</h4>
+                        <p class="text-muted">Stay connected anywhere. SmartChat works seamlessly across desktop,
+                            tablet, and mobile devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0 animate-on-scroll">
+                    <!-- Placeholder visual for about -->
+                    <div class="about-image bg-light d-flex align-items-center justify-content-center"
+                        style="height: 400px;">
+                        <i class="bi bi-chat-heart text-primary" style="font-size: 8rem;"></i>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1 animate-on-scroll">
+                    <h2 class="section-title">About SmartChat</h2>
+                    <p class="about-text">
+                        SmartChat was built on a simple vision: combining the organic flow of human conversation with
+                        the unprecedented efficiency of intelligent AI. We believe that technology shouldn't just
+                        present information—it should facilitate meaningful connections.
+                    </p>
+                    <p class="about-text">
+                        Our mission is to empower individuals and collaborative teams around the world, making every
+                        interaction sharper, safer, and infinitely more productive.
+                    </p>
+                    <a href="#how-it-works" class="btn btn-primary-custom mt-3">See How It Works</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="steps-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">How It Works</h2>
+            <div class="row position-relative">
+                <div class="col-md-3 animate-on-scroll" style="transition-delay: 0.1s">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h5>Sign Up</h5>
+                        <p class="text-muted">Create an account in less than 30 seconds to join our network.</p>
+                        <i class="bi bi-arrow-right step-arrow"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 animate-on-scroll" style="transition-delay: 0.2s">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h5>Connect</h5>
+                        <p class="text-muted">Invite your team or sync your contacts globally to get started.</p>
+                        <i class="bi bi-arrow-right step-arrow"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 animate-on-scroll" style="transition-delay: 0.3s">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h5>Chat</h5>
+                        <p class="text-muted">Engage in immediate, high-quality, and secure conversations.</p>
+                        <i class="bi bi-arrow-right step-arrow"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 animate-on-scroll" style="transition-delay: 0.4s">
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h5>Collaborate</h5>
+                        <p class="text-muted">Leverage integrated AI tools to multiply your team's output.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section id="mission-vision" class="mission-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Our Mission & Vision</h2>
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 animate-on-scroll">
+                    <div class="vision-card p-5 rounded-4 shadow-sm h-100 position-relative overflow-hidden">
+                        <div class="animation-circle"></div>
+                        <h4 class="mb-3 position-relative z-1"><i class="bi bi-bullseye text-primary me-2"></i>Mission
+                        </h4>
+                        <p class="text-muted mb-0 position-relative z-1">To shatter communication barriers by providing
+                            the most intelligent, seamless, and secure messaging platform on the planet. We empower
+                            teams to focus on meaningful work rather than managing scattered conversations.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 animate-on-scroll" style="transition-delay: 0.2s">
+                    <div class="vision-card p-5 rounded-4 shadow-sm h-100 position-relative overflow-hidden">
+                        <div class="animation-pulse"></div>
+                        <h4 class="mb-3 position-relative z-1"><i class="bi bi-eye text-primary me-2"></i>Vision</h4>
+                        <p class="text-muted mb-0 position-relative z-1">A universally connected world where ideas flow
+                            instantly and securely. We envision SmartChat as the fundamental layer of all digital
+                            collaboration, augmenting human creativity with intuitive AI.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">What Our Users Say</h2>
+            <div class="row g-4">
+                <div class="col-md-4 animate-on-scroll">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <p>"SmartChat's AI features have literally cut my response time in half. The summaries are
+                                incredibly accurate!"</p>
+                        </div>
+                        <div class="testimonial-user">
+                            <div class="testimonial-avatar">
+                                <i class="bi bi-person-fill text-muted fs-3"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>Sarah Jenkins</h5>
+                                <p>Product Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-on-scroll" style="transition-delay: 0.1s">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <p>"Absolutely love the clean interface and the cross-platform sync. It's the only messenger
+                                we use internally now."</p>
+                        </div>
+                        <div class="testimonial-user">
+                            <div class="testimonial-avatar">
+                                <i class="bi bi-person-fill text-muted fs-3"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>David Reed</h5>
+                                <p>Lead Developer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-on-scroll" style="transition-delay: 0.2s">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            <p>"A robust platform that brings clarity to our massive team chats. The AI summaries
+                                resolve so much confusion."</p>
+                        </div>
+                        <div class="testimonial-user">
+                            <div class="testimonial-avatar">
+                                <i class="bi bi-person-fill text-muted fs-3"></i>
+                            </div>
+                            <div class="testimonial-info">
+                                <h5>Elena Gomez</h5>
+                                <p>Operations Director</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Get In Touch</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-5 animate-on-scroll text-white">
+                    <div class="contact-info">
+                        <h3>We'd love to hear from you</h3>
+                        <p class="mb-4">Whether you have a question about features, trials, pricing, or anything else,
+                            our team is ready to answer all your questions.</p>
+
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                            <div>123 Innovation Drive, Tech City</div>
+                        </div>
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="bi bi-envelope-fill"></i></div>
+                            <div>support@smartchat.io</div>
+                        </div>
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="bi bi-telephone-fill"></i></div>
+                            <div>+1 (555) 123-4567</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1 mt-5 mt-lg-0 animate-on-scroll">
+                    <div class="contact-card">
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label text-muted">Full Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="John Doe">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label text-muted">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="john@example.com">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label text-muted">Your Message</label>
+                                <textarea class="form-control" id="message" rows="4"
+                                    placeholder="How can we help you?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <a href="#" class="footer-brand">
+                        <span class="brand-icon">
+                            <svg class="brand-icon-svg" viewBox="0 0 24 24" style="width: 28px; height: 28px;">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                                </path>
+                                <path d="M13 3l-3 9h4l-3 9"></path>
+                            </svg>
+                        </span>
+                        SmartChat
+                    </a>
+                    <p class="footer-text">Supercharge your team's communication with the intelligent, secure platform
+                        that connects everything you do.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-title">Product</h5>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#mission-vision">Mission & Vision</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-title">Company</h5>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="footer-title">Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="mb-0 text-muted">&copy; 2026 SmartChat. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script for scroll animations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>
