@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,68 +16,328 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
     <style>
-        .chat-app { height: 100vh; overflow: hidden; display: flex; }
-        
+        .chat-app {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
         /* Sidebar Styling */
-        .sidebar { background-color: var(--bg-dark); border-right: 1px solid rgba(255,255,255,0.05); width: 340px; flex-shrink: 0; display: flex; flex-direction: column; z-index: 10; }
-        @media (max-width: 768px) { .sidebar { position: absolute; left: -100%; transition: 0.3s ease-in-out; height: 100vh; max-width: 85vw; box-shadow: 20px 0 50px rgba(0,0,0,0.5); } .sidebar.show { left: 0; } }
-        
-        .sidebar-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .sidebar-search { padding: 1rem 1.5rem; }
-        .sidebar-contacts { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0.5rem 0.75rem; }
-        .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); background-color: rgba(0,0,0,0.2); }
-        
-        .contact-item { padding: 0.8rem 1rem; border-radius: 12px; transition: var(--transition); cursor: pointer; display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
-        .contact-item:hover { background-color: rgba(255,255,255,0.05); transform: translateX(2px); }
-        .contact-item.active { background-color: var(--bg-card); border-left: 4px solid var(--primary-color); border-radius: 4px 12px 12px 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .min-w-0 { min-width: 0; }
-        
-        .avatar-sm { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background-color: var(--bg-light); border: 1px solid rgba(255,255,255,0.1); }
-        .status-dot { width: 12px; height: 12px; border-radius: 50%; background-color: #10B981; position: absolute; bottom: 0; right: 0; border: 2px solid var(--bg-dark); }
-        .status-dot.offline { background-color: #6B7280; }
-        
+        .sidebar {
+            background-color: var(--bg-dark);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            width: 340px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                left: -100%;
+                transition: 0.3s ease-in-out;
+                height: 100vh;
+                max-width: 85vw;
+                box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+        }
+
+        .sidebar-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-search {
+            padding: 1rem 1.5rem;
+        }
+
+        .sidebar-contacts {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-item {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateX(2px);
+        }
+
+        .contact-item.active {
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .min-w-0 {
+            min-width: 0;
+        }
+
+        .avatar-sm {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--bg-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #10B981;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: 2px solid var(--bg-dark);
+        }
+
+        .status-dot.offline {
+            background-color: #6B7280;
+        }
+
         /* Main Chat Styling */
-        .main-chat { background-color: var(--bg-light); flex: 1; display: flex; flex-direction: column; position: relative; }
-        .chat-header { background-color: var(--bg-card); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
-        .chat-messages { flex: 1; overflow-y: auto; padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; scroll-behavior: smooth; }
-        .chat-footer { background-color: var(--bg-card); border-top: 1px solid rgba(255,255,255,0.05); padding: 1.25rem 1.5rem; }
-        
-        .message-wrapper { display: flex; gap: 1rem; max-width: 80%; }
-        .message-wrapper.sent { align-self: flex-end; flex-direction: row-reverse; }
-        .message-wrapper.received { align-self: flex-start; }
-        
-        .message-bubble { padding: 1rem 1.25rem; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .sent .message-bubble { background-color: var(--primary-color); color: var(--text-dark); border-bottom-right-radius: 4px; }
-        .received .message-bubble { background-color: var(--bg-card); color: var(--text-dark); border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
-        
-        .message-time { font-size: 0.75rem; color: #6B7280; margin-top: 0.25rem; }
-        .sent .message-time { text-align: right; }
-        
-        .ai-badge { font-size: 0.7rem; background-color: rgba(250, 204, 21, 0.2); color: #FACC15; padding: 0.15rem 0.5rem; border-radius: 10px; margin-left: 0.5rem; }
-        
+        .main-chat {
+            background-color: var(--bg-light);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .chat-header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            scroll-behavior: smooth;
+        }
+
+        .chat-footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.25rem 1.5rem;
+        }
+
+        .message-wrapper {
+            display: flex;
+            gap: 1rem;
+            max-width: 80%;
+        }
+
+        .message-wrapper.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-wrapper.received {
+            align-self: flex-start;
+        }
+
+        .message-bubble {
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-bubble pre {
+            background-color: #111827;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            /* Force code text to wrap down instead of scrolling horizontally */
+            white-space: pre-wrap;       
+            word-wrap: break-word;       
+            overflow-wrap: break-word;
+            word-break: break-all;
+            overflow-x: hidden;
+        }
+
+        .message-bubble code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .sent .message-bubble {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            border-bottom-right-radius: 4px;
+        }
+
+        .received .message-bubble {
+            background-color: var(--bg-card);
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: #6B7280;
+            margin-top: 0.25rem;
+        }
+
+        .sent .message-time {
+            text-align: right;
+        }
+
+        .ai-badge {
+            font-size: 0.7rem;
+            background-color: rgba(250, 204, 21, 0.2);
+            color: #FACC15;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            margin-left: 0.5rem;
+        }
+
         /* Inputs */
-        .search-input { background-color: var(--bg-light); border: 1px solid rgba(255,255,255,0.05); color: white; border-radius: 50px; padding: 0.6rem 1rem 0.6rem 2.8rem; width: 100%; transition: var(--transition); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-        .search-input:focus { background-color: var(--bg-light); border-color: var(--primary-color); color: white; outline: none; box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2); }
-        .search-icon { position: absolute; left: 2.25rem; top: 50%; transform: translateY(-50%); color: #6B7280; z-index: 5; }
-        
-        .chat-input-wrapper { display: flex; align-items: center; gap: 1rem; background-color: var(--bg-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.5rem 0.5rem 0.5rem 1.5rem; transition: var(--transition); }
-        .chat-input-wrapper:focus-within { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15); }
-        .chat-input { background: none; border: none; color: white; flex: 1; outline: none; }
-        .chat-input::placeholder { color: #6B7280; }
-        
-        .btn-send { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: white; border: none; transition: var(--transition); }
-        .btn-send:hover { background-color: var(--primary-color-hover); transform: scale(1.05); }
-        
-        .btn-attachment { color: #6B7280; background: none; border: none; padding: 0.5rem; transition: var(--transition); }
-        .btn-attachment:hover { color: var(--primary-color); }
-        
+        .search-input {
+            background-color: var(--bg-light);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: white;
+            border-radius: 50px;
+            padding: 0.6rem 1rem 0.6rem 2.8rem;
+            width: 100%;
+            transition: var(--transition);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            background-color: var(--bg-light);
+            border-color: var(--primary-color);
+            color: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 2.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6B7280;
+            z-index: 5;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            transition: var(--transition);
+        }
+
+        .chat-input-wrapper:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+        }
+
+        .chat-input {
+            background: none;
+            border: none;
+            color: white;
+            flex: 1;
+            outline: none;
+        }
+
+        .chat-input::placeholder {
+            color: #6B7280;
+        }
+
+        .btn-send {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .btn-send:hover {
+            background-color: var(--primary-color-hover);
+            transform: scale(1.05);
+        }
+
+        .btn-attachment {
+            color: #6B7280;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-attachment:hover {
+            color: var(--primary-color);
+        }
+
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
+
 <body>
 
     <div class="chat-app">
@@ -84,28 +345,35 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header d-flex justify-content-between align-items-center">
                 <a href="index.html" class="text-decoration-none text-white d-flex align-items-center gap-2">
-                    <svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: none; stroke: var(--primary-color); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    <svg viewBox="0 0 24 24"
+                        style="width: 24px; height: 24px; fill: none; stroke: var(--primary-color); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;">
+                        <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                        </path>
                         <path d="M13 3l-3 9h4l-3 9"></path>
                     </svg>
                     <span class="fw-bold fs-5">SmartChat</span>
                 </a>
                 <div class="d-flex align-items-center gap-1">
-                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted" title="New Chat"><i class="bi bi-pencil-square fs-5"></i></button>
-                    <button class="btn btn-sm btn-outline-secondary border-0 d-md-none" onclick="document.getElementById('sidebar').classList.remove('show')"><i class="bi bi-x-lg fs-5"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted" title="New Chat"><i
+                            class="bi bi-pencil-square fs-5"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary border-0 d-md-none"
+                        onclick="document.getElementById('sidebar').classList.remove('show')"><i
+                            class="bi bi-x-lg fs-5"></i></button>
                 </div>
             </div>
-            
+
             <div class="sidebar-search position-relative">
                 <i class="bi bi-search search-icon"></i>
                 <input type="text" class="search-input" placeholder="Search chats...">
             </div>
-            
+
             <div class="sidebar-contacts">
                 <!-- SmartChat AI -->
                 <div class="contact-item active">
                     <div class="position-relative">
-                        <div class="avatar-sm bg-primary d-flex align-items-center justify-content-center text-white"><i class="bi bi-robot fs-5"></i></div>
+                        <div class="avatar-sm bg-primary d-flex align-items-center justify-content-center text-white"><i
+                                class="bi bi-robot fs-5"></i></div>
                         <div class="status-dot"></div>
                     </div>
                     <div class="flex-grow-1 min-w-0">
@@ -121,21 +389,24 @@
                 <!-- Marketing Team -->
                 <div class="contact-item">
                     <div class="position-relative">
-                        <div class="avatar-sm d-flex align-items-center justify-content-center text-white" style="background-color: #8B5CF6;"><i class="bi bi-megaphone fs-5"></i></div>
+                        <div class="avatar-sm d-flex align-items-center justify-content-center text-white"
+                            style="background-color: #8B5CF6;"><i class="bi bi-megaphone fs-5"></i></div>
                     </div>
                     <div class="flex-grow-1 min-w-0">
                         <div class="d-flex justify-content-between align-items-baseline mb-1">
                             <h6 class="mb-0 text-white fw-semibold text-truncate">Marketing Team</h6>
                             <small class="text-muted" style="font-size: 0.7rem;">10:24 AM</small>
                         </div>
-                        <p class="mb-0 text-muted small text-truncate"><span class="text-white">Sarah:</span> Can everyone review the slide deck?</p>
+                        <p class="mb-0 text-muted small text-truncate"><span class="text-white">Sarah:</span> Can
+                            everyone review the slide deck?</p>
                     </div>
                 </div>
 
                 <!-- Alice Walker -->
                 <div class="contact-item">
                     <div class="position-relative">
-                        <div class="avatar-sm d-flex align-items-center justify-content-center text-white" style="background-color: #EC4899;">AW</div>
+                        <div class="avatar-sm d-flex align-items-center justify-content-center text-white"
+                            style="background-color: #EC4899;">AW</div>
                         <div class="status-dot"></div>
                     </div>
                     <div class="flex-grow-1 min-w-0">
@@ -150,26 +421,30 @@
                 <!-- Product Launch -->
                 <div class="contact-item">
                     <div class="position-relative">
-                        <div class="avatar-sm d-flex align-items-center justify-content-center text-white" style="background-color: #10B981;"><i class="bi bi-rocket-takeoff fs-5"></i></div>
+                        <div class="avatar-sm d-flex align-items-center justify-content-center text-white"
+                            style="background-color: #10B981;"><i class="bi bi-rocket-takeoff fs-5"></i></div>
                     </div>
                     <div class="flex-grow-1 min-w-0">
                         <div class="d-flex justify-content-between align-items-baseline mb-1">
                             <h6 class="mb-0 text-white fw-semibold text-truncate">Product Launch V2</h6>
                             <small class="text-muted" style="font-size: 0.7rem;">Tuesday</small>
                         </div>
-                        <p class="mb-0 text-muted small text-truncate"><span class="ai-badge ms-0 me-1">AI Summary</span> Deployment was successful and metrics are stable.</p>
+                        <p class="mb-0 text-muted small text-truncate"><span class="ai-badge ms-0 me-1">AI
+                                Summary</span> Deployment was successful and metrics are stable.</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="sidebar-footer">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-sm d-flex align-items-center justify-content-center text-white" style="background-color: #3B82F6;">JD</div>
+                    <div class="avatar-sm d-flex align-items-center justify-content-center text-white"
+                        style="background-color: #3B82F6;">JD</div>
                     <div class="flex-grow-1">
                         <h6 class="mb-0 text-white fs-6">Jane Doe</h6>
                         <small class="text-muted">Online</small>
                     </div>
-                    <a href="index.html" class="btn btn-sm btn-outline-secondary border-0" title="Log Out"><i class="bi bi-box-arrow-right fs-5"></i></a>
+                    <a href="index.html" class="btn btn-sm btn-outline-secondary border-0" title="Log Out"><i
+                            class="bi bi-box-arrow-right fs-5"></i></a>
                 </div>
             </div>
         </aside>
@@ -178,35 +453,47 @@
         <main class="main-chat w-100">
             <header class="chat-header">
                 <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-sm btn-outline-secondary border-0 d-md-none p-0 me-2" onclick="document.getElementById('sidebar').classList.add('show')"><i class="bi bi-list fs-3"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary border-0 d-md-none p-0 me-2"
+                        onclick="document.getElementById('sidebar').classList.add('show')"><i
+                            class="bi bi-list fs-3"></i></button>
                     <div class="position-relative">
-                        <div class="avatar-sm bg-primary d-flex align-items-center justify-content-center text-white"><i class="bi bi-robot fs-5"></i></div>
+                        <div class="avatar-sm bg-primary d-flex align-items-center justify-content-center text-white"><i
+                                class="bi bi-robot fs-5"></i></div>
                         <div class="status-dot"></div>
                     </div>
                     <div>
-                        <h5 class="mb-0 text-white fw-semibold">SmartChat AI <i class="bi bi-patch-check-fill text-primary ms-1 fs-6"></i></h5>
+                        <h5 class="mb-0 text-white fw-semibold">SmartChat AI <i
+                                class="bi bi-patch-check-fill text-primary ms-1 fs-6"></i></h5>
                         <small class="text-muted">Always ready to help</small>
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted"><i class="bi bi-telephone fs-5"></i></button>
-                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted"><i class="bi bi-camera-video fs-5"></i></button>
-                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted"><i class="bi bi-three-dots-vertical fs-5"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted"><i
+                            class="bi bi-telephone fs-5"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted"><i
+                            class="bi bi-camera-video fs-5"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary border-0 text-muted"><i
+                            class="bi bi-three-dots-vertical fs-5"></i></button>
                 </div>
             </header>
 
             <div class="chat-messages">
                 <!-- Date Separator -->
                 <div class="text-center my-2">
-                    <span class="badge bg-dark text-muted fw-normal px-3 py-2 rounded-pill border border-secondary border-opacity-25">Today</span>
+                    <span
+                        class="badge bg-dark text-muted fw-normal px-3 py-2 rounded-pill border border-secondary border-opacity-25">Today</span>
                 </div>
 
                 <!-- Received -->
                 <div class="message-wrapper received">
-                    <div class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto"><i class="bi bi-robot"></i></div>
+                    <div
+                        class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto">
+                        <i class="bi bi-robot"></i>
+                    </div>
                     <div class="d-flex flex-column gap-1">
                         <div class="message-bubble">
-                            Hi Jane! 👋 I'm your SmartChat AI assistant. I've analyzed your upcoming schedule for this week.
+                            Hi Jane! 👋 I'm your SmartChat AI assistant. I've analyzed your upcoming schedule for this
+                            week.
                         </div>
                         <div class="message-time">10:15 AM</div>
                     </div>
@@ -216,7 +503,8 @@
                 <div class="message-wrapper sent">
                     <div class="d-flex flex-column gap-1">
                         <div class="message-bubble">
-                            Hey SmartChat! That's great. What does my thursday look like? Can I fit in a sync with the marketing team?
+                            Hey SmartChat! That's great. What does my thursday look like? Can I fit in a sync with the
+                            marketing team?
                         </div>
                         <div class="message-time">10:18 AM</div>
                     </div>
@@ -224,10 +512,14 @@
 
                 <!-- Received -->
                 <div class="message-wrapper received">
-                    <div class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto"><i class="bi bi-robot"></i></div>
+                    <div
+                        class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto">
+                        <i class="bi bi-robot"></i>
+                    </div>
                     <div class="d-flex flex-column gap-1">
                         <div class="message-bubble">
-                            Your Thursday is mostly open in the afternoon! I can schedule a 30-minute sync at 2:00 PM EST with the Marketing Team. Should I send the invites?
+                            Your Thursday is mostly open in the afternoon! I can schedule a 30-minute sync at 2:00 PM
+                            EST with the Marketing Team. Should I send the invites?
                         </div>
                         <div class="message-time">10:18 AM</div>
                     </div>
@@ -245,9 +537,13 @@
 
                 <!-- Received (Action/Summary) -->
                 <div class="message-wrapper received">
-                    <div class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto"><i class="bi bi-robot"></i></div>
+                    <div
+                        class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto">
+                        <i class="bi bi-robot"></i>
+                    </div>
                     <div class="d-flex flex-column gap-1">
-                        <div class="message-bubble border border-primary border-opacity-50" style="background-color: rgba(13, 110, 253, 0.05);">
+                        <div class="message-bubble border border-primary border-opacity-50"
+                            style="background-color: rgba(13, 110, 253, 0.05);">
                             <div class="mb-2 fw-semibold d-flex align-items-center text-white">
                                 <i class="bi bi-calendar-check text-primary me-2"></i> Meeting Scheduled
                             </div>
@@ -268,9 +564,10 @@
 
             <!-- Chat Footer / Input -->
             <footer class="chat-footer">
-                <form class="chat-input-wrapper">
+                <form class="chat-input-wrapper" id="chat-form">
                     <button type="button" class="btn-attachment"><i class="bi bi-paperclip fs-5"></i></button>
-                    <input type="text" class="chat-input" placeholder="Type a message or ask AI to summarize...">
+                    <input type="text" class="chat-input" id="message-input"
+                        placeholder="Type a message or ask AI to summarize..." required autocomplete="off">
                     <button type="button" class="btn-attachment"><i class="bi bi-emoji-smile fs-5"></i></button>
                     <button type="submit" class="btn-send ms-2"><i class="bi bi-send-fill"></i></button>
                 </form>
@@ -280,5 +577,107 @@
 
     <!-- Bootstrap Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Markdown and DOMPurify for formatting AI responses safely -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatForm = document.getElementById('chat-form');
+            const messageInput = document.getElementById('message-input');
+            const chatMessagesContainer = document.querySelector('.chat-messages');
+
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const userText = messageInput.value.trim();
+                if (!userText) return;
+
+                const getPhTime = () => new Date().toLocaleTimeString('en-US', { timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit' });
+
+                // Append User Message
+                const userBubble = `
+                <div class="message-wrapper sent">
+                    <div class="d-flex flex-column gap-1">
+                        <div class="message-bubble">${userText}</div>
+                        <div class="message-time">${getPhTime()} (PHT)</div>
+                    </div>
+                </div>`;
+                chatMessagesContainer.insertAdjacentHTML('beforeend', userBubble);
+                messageInput.value = '';
+                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+
+                // Add typing indicator
+                const typingId = 'typing-' + Date.now();
+                const typingIndicator = `
+                <div class="message-wrapper received" id="${typingId}">
+                    <div class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto"><i class="bi bi-robot"></i></div>
+                    <div class="d-flex flex-column gap-1">
+                        <div class="message-bubble">
+                            <span class="spinner-grow spinner-grow-sm text-primary" role="status" aria-hidden="true" style="width: 0.5rem; height: 0.5rem;"></span>
+                            <span class="spinner-grow spinner-grow-sm text-primary" role="status" aria-hidden="true" style="width: 0.5rem; height: 0.5rem;"></span>
+                            <span class="spinner-grow spinner-grow-sm text-primary" role="status" aria-hidden="true" style="width: 0.5rem; height: 0.5rem;"></span>
+                        </div>
+                    </div>
+                </div>`;
+                chatMessagesContainer.insertAdjacentHTML('beforeend', typingIndicator);
+                chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+
+                // Call the Backend API
+                try {
+                    const response = await fetch('http://127.0.0.1:5001/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: userText })
+                    });
+
+                    const data = await response.json();
+
+                    // Remove typing indicator safely
+                    const indicatorEl = document.getElementById(typingId);
+                    if (indicatorEl) indicatorEl.remove();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || data.detail || 'Failed to connect to AI');
+                    }
+
+                    // Parse markdown formatting natively exactly like a true code editor, then sanitize against XSS payload logic
+                    const rawHTML = marked.parse(data.response);
+                    const formattedResponse = DOMPurify.sanitize(rawHTML);
+
+                    const aiBubble = `
+                    <div class="message-wrapper received">
+                        <div class="avatar-sm flex-shrink-0 bg-primary d-flex align-items-center justify-content-center text-white mt-auto"><i class="bi bi-robot"></i></div>
+                        <div class="d-flex flex-column gap-1">
+                            <div class="message-bubble w-100">
+                                ${formattedResponse}
+                            </div>
+                            <div class="message-time">${getPhTime()} (PHT)</div>
+                        </div>
+                    </div>`;
+                    chatMessagesContainer.insertAdjacentHTML('beforeend', aiBubble);
+                    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+
+                } catch (error) {
+                    const indicatorEl = document.getElementById(typingId);
+                    if (indicatorEl) indicatorEl.remove();
+
+                    const errorBubble = `
+                    <div class="message-wrapper received">
+                        <div class="avatar-sm flex-shrink-0 bg-danger d-flex align-items-center justify-content-center text-white mt-auto"><i class="bi bi-exclamation-triangle"></i></div>
+                        <div class="d-flex flex-column gap-1">
+                            <div class="message-bubble border border-danger border-opacity-50" style="background-color: rgba(220, 53, 69, 0.05);">
+                                Error connecting to backend: ${error.message}. Is your backend running on port 5001?
+                            </div>
+                            <div class="message-time">System</div>
+                        </div>
+                    </div>`;
+                    chatMessagesContainer.insertAdjacentHTML('beforeend', errorBubble);
+                    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
